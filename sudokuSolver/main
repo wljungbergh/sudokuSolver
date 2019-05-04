@@ -56,14 +56,6 @@ def create_grid(sudokuArray):
             
     return cellArray,sectionNumbers
 
-start = create_sudoku()
-fill_sudoku(start, trainingSudoku)
-
-sol = create_sudoku()
-fill_sudoku(sol,trainingSudokuSolution)
-
-merge_img(start,sol)
-x, y = create_grid(trainingSudoku)
 
 def getArray(cellArray):
     array = []
@@ -74,16 +66,25 @@ def getArray(cellArray):
             #print(x[i][j].assignedNumber)
     return np.array(array)
 
+def solve_sudoku(sudokuArray):
+    solvedSudoku, secNumbers = create_grid(sudokuArray)
+    for a in range(500):
+        print('lap {}...............................'.format(a))
+        for i in range(9):
+            for j in range(9):
+                if solvedSudoku[i][j].assignedNumber == None:
+                    solvedSudoku[i][j].updatePossibleNumbers(getArray(solvedSudoku),secNumbers)
+    return solvedSudoku
 
-a = 0
-#while all(len(s) != 9 for s in y):
-for a in range(2):
-    #a += 1
-    print('lap {}...............................'.format(a))
-    for i in range(9):
-        for j in range(9):
-            if x[i][j].assignedNumber == None:
-                x[i][j].updatePossibleNumbers(getArray(x),y)
+
+x = solve_sudoku(expertSudoku)
+start = create_sudoku()
+fill_sudoku(start, trainingSudoku)
+
+sol = create_sudoku()
+fill_sudoku(sol,trainingSudokuSolution)
+
+merge_img(start,sol)
                 
 done = create_sudoku()
 fill_sudoku(done,getArray(x))
