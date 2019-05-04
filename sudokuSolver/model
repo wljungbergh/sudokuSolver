@@ -17,7 +17,7 @@ class Cell():
       self.assignedNumber = None
         
     def updatePossibleNumbers(self, sudukoArray, sectionNumbers):
-        ## takes a numpy array containing the current suduko sheet, and a list of list with the numbers for the diffrent sections
+    ## takes a numpy array containing the current suduko sheet, and a list of list with the numbers for the diffrent sections
       ## and updates the possible numbers for that cell
       x = self.X
       y = self.Y
@@ -34,10 +34,11 @@ class Cell():
             continue
       #print('found {} in section'.format(number))
         else:
-          numList.append(number)  
+          numList.append(number)
+          
       self.possibleNumbers = numList
       if len(numList)==1:
-          print('only one number possible: {}'.format(numList[0]))
+          #print('only one number possible: {}'.format(numList[0]))
           self.assignNumber(numList[0], sectionNumbers)
           
           #self.assignNumber(numList[0],sectionNumbers[self.section])
