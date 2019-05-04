@@ -9,6 +9,9 @@ Created on Sat Apr 27 15:27:46 2019
 import math
 import numpy as np
 from PIL import Image, ImageDraw
+import time
+
+startTime = time.time()
 
 def create_sudoku():
     img = Image.new('RGB',(300,300),color='white')
@@ -73,23 +76,20 @@ def getArray(cellArray):
 
 
 a = 0
-while all(len(s) != 9 for s in y):
-    a += 1
+#while all(len(s) != 9 for s in y):
+for a in range(2):
+    #a += 1
     print('lap {}...............................'.format(a))
     for i in range(9):
         for j in range(9):
-#            print('pre assigned number: ' + str(x[i][j].assignedNumber))
-#            print('pre possible number: ' + str(x[i][j].possibleNumbers))
             if x[i][j].assignedNumber == None:
-                x[i][j].updatePossibleNumbers(trainingSudoku,y)
-#            print('assigned number: ' + str(x[i][j].assignedNumber))
-#            print('possible number: ' + str(x[i][j].possibleNumbers))
-#            print('................')
-#            print(a)
-    if a > 1000:
-        print('iteration100')
-        break
+                x[i][j].updatePossibleNumbers(getArray(x),y)
+                
 done = create_sudoku()
 fill_sudoku(done,getArray(x))
 
 merge_img(done,sol)
+
+endTime = time.time()
+
+print(endTime - startTime)

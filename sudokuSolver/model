@@ -24,15 +24,17 @@ class Cell():
       transpose = sudukoArray.T
       numList = []
       for number in self.possibleNumbers:
+        #print(sudukoArray[y])  
+        #print(transpose[x])
         if number in sudukoArray[y]:
           #print('found {} in row'.format(number))
           continue
         elif number in transpose[x]:
-            continue
           #print('found {} in column'.format(number))
+          continue
         elif number in sectionNumbers[self.section]:
+            #print('found {} in section'.format(number))
             continue
-      #print('found {} in section'.format(number))
         else:
           numList.append(number)
           
