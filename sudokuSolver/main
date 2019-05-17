@@ -59,10 +59,10 @@ def create_grid(sudokuArray):
 
 def getArray(cellArray):
     array = []
-    for i in range(len(x)):
+    for i in range(len(cellArray)):
         array.append([])
-        for j in range(len(x[i])):
-            array[i].append(x[i][j].assignedNumber)
+        for j in range(len(cellArray[i])):
+            array[i].append(cellArray[i][j].assignedNumber)
             #print(x[i][j].assignedNumber)
     return np.array(array)
 
@@ -75,6 +75,19 @@ def solve_sudoku(sudokuArray):
                 if solvedSudoku[i][j].assignedNumber == None:
                     solvedSudoku[i][j].updatePossibleNumbers(getArray(solvedSudoku),secNumbers)
     return solvedSudoku
+def createArrayFromString(string):
+    ## Takes an 72 character string, with numbers and . represent No Number
+    array = []
+    for i in range(9):
+        tempArr = []
+        subStr = string[9*i:9*(i+1)]
+        for char in subStr:
+            if char == ".":
+                char = None
+            tempArr.append(char)
+        array.append(tempArr)
+    return array
+    
 
 
 x = solve_sudoku(expertSudoku)

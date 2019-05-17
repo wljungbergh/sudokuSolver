@@ -15,9 +15,9 @@ class Cell():
       self.Y = posY
       self.section =  int(3*(math.floor(posY/3)) + math.floor(posX/3))
       self.assignedNumber = None
-        
-    def updatePossibleNumbers(self, sudukoArray, sectionNumbers):
-    ## takes a numpy array containing the current suduko sheet, and a list of list with the numbers for the diffrent sections
+    
+    def checkRowAndCol(self, sudukoArray, sectionNumbers):
+      ## takes a numpy array containing the current suduko sheet, and a list of list with the numbers for the diffrent sections
       ## and updates the possible numbers for that cell
       x = self.X
       y = self.Y
@@ -38,10 +38,25 @@ class Cell():
         else:
           numList.append(number)
           
-      self.possibleNumbers = numList
-      if len(numList)==1:
+      self.possibleNumbers = numList   
+    
+    def checkSection(self, sectionNumbers):
+        numList = []
+        for number in self.possibleNumbers:
+            if number not in sectionNumbers[self.section]:
+                numList.append(number)
+        self.possibleNumbers = numList
+        
+            
+    
+    def updatePossibleNumbers(self, sudukoArray, sectionNumbers):
+        
+      self.checkRowAndCol(sudukoArray, sectionNumbers)
+      self.checkSection(sectionNumbers)
+      
+      if len(self.possibleNumbers)==1:
           #print('only one number possible: {}'.format(numList[0]))
-          self.assignNumber(numList[0], sectionNumbers)
+          self.assignNumber(self.possibleNumbers[0], sectionNumbers)
           
           #self.assignNumber(numList[0],sectionNumbers[self.section])
 
