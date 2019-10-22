@@ -18,7 +18,6 @@ def create_array_from_string(string):
 
 r = create_array_from_string(testing.expert['start'][0])
 
-
 def find_empty_cell(grid):
 
     for idxy, y in enumerate(grid):
@@ -45,3 +44,12 @@ def valid_for_box(grid, position, number):
 def valid_pos(grid, position, number):
     (row, col) = position
     return valid_for_col(grid, col, number) and valid_for_row(grid, row, number) and valid_for_box(grid, position, number)
+
+def find_next_valid_number(grid, position):
+    (x,y) = position
+    start_number = grid[y][x]
+    for number in range(start+1,9):
+        if valid_pos(grid, position, number):
+            return number
+    
+    return False
