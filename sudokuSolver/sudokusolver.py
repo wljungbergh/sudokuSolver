@@ -1,10 +1,7 @@
 import trainingData
 import numpy as np
 import math
-import cProfile
 
-
-testing = trainingData.TestingCases()
 
 def create_array_from_string(string):
     n = int(math.sqrt(len(string)))
@@ -77,7 +74,7 @@ def find_next_valid_number(grid, position):
 def is_solved(grid):
     return not find_empty_cell(grid)
 
-def solve_suduko(grid):
+def solve_sudoku(grid):
     backtrack = False
     filled_cells = []
     iterations = 0
@@ -90,7 +87,7 @@ def solve_suduko(grid):
             if filled_cells: 
                 pos = filled_cells.pop()
             else:
-                print("Solve couldn't be found!")
+                print("Solution couldn't be found!")
                 return False
         
         number = find_next_valid_number(grid, pos)
@@ -104,14 +101,10 @@ def solve_suduko(grid):
     print(f'Number of iterations: {iterations}')
     return grid
 
-
 if __name__ == '__main__':
-    r = create_array_from_string(testing.expert['start'][0])
-    pr = cProfile.Profile()
-    pr.enable()
-    solved = solve_suduko(r)
-    pr.disable()
-    pr.print_stats()
-    
+    testing = trainingData.TestingCases()
+    r = create_array_from_string(testing.intermediate['start'][0])
+    solved = solve_sudoku(r)
+    print(solved)
    
 
