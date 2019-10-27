@@ -3,6 +3,8 @@ import numpy as np
 import imutils
 import pytesseract
 import sudokusolver as ss
+import os
+from imutils import paths
 
 
 def load_image(image_path):
@@ -10,7 +12,7 @@ def load_image(image_path):
 
 def preprocess_image(image):
     gray = cv.cvtColor(image,cv.COLOR_BGR2GRAY)
-    gray = cv.GaussianBlur(gray,(5,5),0)
+    gray = cv.GaussianBlur(gray,(7,7),0)
     thresh = cv.adaptiveThreshold(gray,255,1,1,11,2)
     return thresh
 
@@ -67,40 +69,41 @@ def divide_sudoku_image(image):
     full_size = image.shape[0]
     cell_size = full_size // 9
     cells = []
-    '''for i in range(9):
+    for i in range(9):
         for j in range(9):
             sub_img = image[i*cell_size:(i+1)*cell_size,j*cell_size:(j+1)*cell_size]
-            cells.append(sub_img)'''
-    for i in range(9):
+            cells.append(sub_img)
+    '''for i in range(9):
         sub_img = image[i*cell_size:(i+1)*cell_size,:]
-        cells.append(sub_img)
+        cells.append(sub_img)'''
 
 
     return cells
 
 if __name__ == '__main__':
-    fp = ('./images/img-001.jpg')
-    img = extract_sudoku_image(fp)
-    cells = divide_sudoku_image(img)
-    img2 = cv.bitwise_not(cells[2])
-    suduko = ''
-    '''for d in cells:
-        d = cv.bitwise_not(d)
-        rec = pytesseract.image_to_string(d,config='--psm 10')
-        number = list(filter(str.isdigit, rec))
-        if number:
-            suduko += number[0]
-        else:
-            suduko += '.'
-    
-    print(ss.create_array_from_string(suduko))'''
-    for d in cells:
-        d = cv.bitwise_not(d)
-        rec = pytesseract.image_to_string(d,config='--psm 10')
-        print(rec)
-
-    cv.imshow("Game Boy Screen", img)
-    cv.waitKey(0)
+    img_paths = list(paths.list_images('./images/sudoku_dataset'))
+    for index, fp in enumerate(img_paths):
+        #fp = ('./images/img-002.jpg')
+        img = extract_sudoku_image(fp)
+        cells = divide_sudoku_image(img)
+        img2 = cv.bitwise_not(cells[2])
+        suduko = ''
+        '''for d in cells:
+            d = cv.bitwise_not(d)
+            rec = pytesseract.image_to_string(d,config='--psm 10')
+            number = list(filter(str.isdigit, rec))
+            if number:
+                suduko += number[0]
+            else:
+                suduko += '.'
+        
+        print(ss.create_array_from_string(suduko))'''
+        '''cv.imshow("Game Boy Screen", img)
+        cv.waitKey(0)'''
+        for idx, d in enumerate(cells):
+            d = cv.bitwise_not(d)
+            cv.imwrite('./images/dataset/{}_{}.png'.format(index, idx), d)
+            
 
     
 
