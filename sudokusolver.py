@@ -103,7 +103,7 @@ def solve_sudoku(grid):
 
 if __name__ == '__main__':
     testing = trainingData.TestingCases()
-    r = create_array_from_string(testing.intermediate['start'][0])
+    r = create_array_from_string(testing.expert['start'][0])
     solved = solve_sudoku(r)
     print(solved)
    

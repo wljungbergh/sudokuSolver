@@ -11,6 +11,8 @@ import numpy as np
 from PIL import Image, ImageDraw
 import time
 
+import trainingData as td
+
 startTime = time.time()
 
 def create_sudoku():
@@ -88,7 +90,6 @@ def createArrayFromString(string):
         array.append(tempArr)
     return array
     
-
 
 x = solve_sudoku(expertSudoku)
 start = create_sudoku()
